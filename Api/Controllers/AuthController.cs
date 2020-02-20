@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Domain.Authenticate;
+using Domain.Error;
 using Domain.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class AuthController : Controller
@@ -17,6 +20,7 @@ namespace Api.Controllers
             _authenticateService = authenticateService;
         }
         
+        [AllowAnonymous]
         [HttpPost("[action]")]
         public async Task<ActionResult> Login([FromBody] UserLoginRequestModel requestModel)
         {
@@ -29,18 +33,19 @@ namespace Api.Controllers
         {
             return Ok();
         }
-
+        
+        [AllowAnonymous]
         [HttpPost("[action]")]
         public async Task<ActionResult> Registration([FromBody] UserRegistrationRequestModel requestModel)
         {
             return Ok();
         }
         
-        
+        [AllowAnonymous]
         [HttpGet("[action]")]
         public async Task<IActionResult> Test()
         {
-            return Ok();
+            return Ok("Кукусики");
         }
 
     }
