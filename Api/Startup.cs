@@ -88,6 +88,11 @@ namespace Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            
             // global cors policy
             app.UseCors(x => x
                 .AllowAnyOrigin()
@@ -97,11 +102,6 @@ namespace Api
             app.UseAuthentication();
 
             app.UseMvc();
-
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
 
             app.UseRouting();
             

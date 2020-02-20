@@ -18,17 +18,24 @@ namespace Api.Controllers
         }
         
         [HttpPost("[action]")]
-        public async Task<ActionResult> Login()
+        public async Task<ActionResult> Login([FromBody] UserLoginRequestModel requestModel)
         {
             return Ok();
         }
 
         
         [HttpPost("[action]")]
-        public async Task<ActionResult> Logout()
+        public async Task<ActionResult> Logout([FromBody] UserLogoutRequestModel requestModel)
         {
             return Ok();
         }
+
+        [HttpPost("[action]")]
+        public async Task<ActionResult> Registration([FromBody] UserRegistrationRequestModel requestModel)
+        {
+            return Ok();
+        }
+        
         
         [HttpGet("[action]")]
         public async Task<IActionResult> Test()
