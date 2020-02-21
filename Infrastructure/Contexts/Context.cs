@@ -18,6 +18,9 @@ namespace Infrastructure.Contexts
             modelBuilder.Entity<UserModel>()
                 .HasIndex(b => b.Phone)
                 .IsUnique();
+            modelBuilder.Entity<UserModel>()
+                .Property(b => b.CreatedDate)
+                .HasDefaultValueSql("NOW()");
         }
     }
 }

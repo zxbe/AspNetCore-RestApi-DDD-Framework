@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
 using Domain.Base;
 
 namespace Domain.User
@@ -17,6 +18,11 @@ namespace Domain.User
         [Required]
         [MaxLength(20)]
         public string NameSecond { get; set; }
+        /// <summary>
+        /// User patronymic name
+        /// </summary>
+        [MaxLength(20)]
+        public string NamePatronymic { get; set; }
         /// <summary>
         /// User phone
         /// </summary>

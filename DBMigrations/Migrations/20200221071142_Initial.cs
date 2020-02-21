@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DBMigrations.Migrations
 {
-    public partial class Initital : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,10 +13,11 @@ namespace DBMigrations.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     IsActive = table.Column<bool>(nullable: true),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValueSql: "NOW()"),
                     CreatorId = table.Column<Guid>(nullable: true),
                     NameFirst = table.Column<string>(maxLength: 20, nullable: false),
                     NameSecond = table.Column<string>(maxLength: 20, nullable: false),
+                    NamePatronymic = table.Column<string>(maxLength: 20, nullable: true),
                     Phone = table.Column<string>(maxLength: 20, nullable: false),
                     Email = table.Column<string>(maxLength: 20, nullable: false),
                     Password = table.Column<string>(maxLength: 50, nullable: false)

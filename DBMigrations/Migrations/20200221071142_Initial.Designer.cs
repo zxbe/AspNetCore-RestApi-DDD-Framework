@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DBMigrations.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20200219142302_Initital")]
-    partial class Initital
+    [Migration("20200221071142_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,7 +28,9 @@ namespace DBMigrations.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("timestamp without time zone");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp without time zone")
+                        .HasDefaultValueSql("NOW()");
 
                     b.Property<Guid?>("CreatorId")
                         .HasColumnType("uuid");
@@ -43,6 +45,10 @@ namespace DBMigrations.Migrations
 
                     b.Property<string>("NameFirst")
                         .IsRequired()
+                        .HasColumnType("character varying(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<string>("NamePatronymic")
                         .HasColumnType("character varying(20)")
                         .HasMaxLength(20);
 
