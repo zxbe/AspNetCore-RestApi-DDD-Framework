@@ -36,6 +36,11 @@ namespace Api
         public void ConfigureServices(IServiceCollection services)
         {
             #region DI Service
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile(AppSettings, optional: true, reloadOnChange: false);
+            services.AddSingleton(builder.Build());
             // services.AddTransient<IAuthenticateService, AuthenticateService>();
             // services.AddTransient<IUserService, UserService>();
             services.AddSingleton<IHostedService, ScheduleTask>();
@@ -47,14 +52,7 @@ namespace Api
             
             services.AddCors();
             services.AddMvc(p => p.EnableEndpointRouting = false);
-            
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile(AppSettings, optional: true, reloadOnChange: false);
-            services.AddSingleton(builder.Build());
 
-            
             var key = Encoding.ASCII.GetBytes(Configuration["AppSettings:Secret"]);
             services.AddAuthentication(x =>
                 {

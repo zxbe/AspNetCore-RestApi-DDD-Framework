@@ -14,11 +14,11 @@ namespace Api.Controllers
     [Route("api/[controller]")]
     public class AuthController : Controller
     {
-        private IAuthenticateService _authenticateService;
-        public AuthController(IAuthenticateService authenticateService)
-        {
-            _authenticateService = authenticateService;
-        }
+        // private IAuthenticateService _authenticateService;
+        // public AuthController(IAuthenticateService authenticateService)
+        // {
+            // _authenticateService = authenticateService;
+        // }
         
         [AllowAnonymous]
         [HttpPost("[action]")]

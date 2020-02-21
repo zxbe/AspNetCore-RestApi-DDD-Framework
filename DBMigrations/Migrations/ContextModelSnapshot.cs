@@ -39,7 +39,9 @@ namespace DBMigrations.Migrations
                         .HasMaxLength(20);
 
                     b.Property<bool?>("IsActive")
-                        .HasColumnType("boolean");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValueSql("true");
 
                     b.Property<string>("NameFirst")
                         .IsRequired()
@@ -47,7 +49,9 @@ namespace DBMigrations.Migrations
                         .HasMaxLength(20);
 
                     b.Property<string>("NamePatronymic")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("character varying(20)")
+                        .HasDefaultValueSql("null")
                         .HasMaxLength(20);
 
                     b.Property<string>("NameSecond")
@@ -62,7 +66,9 @@ namespace DBMigrations.Migrations
 
                     b.Property<string>("Phone")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("character varying(20)")
+                        .HasDefaultValueSql("null")
                         .HasMaxLength(20);
 
                     b.HasKey("Id");

@@ -4,7 +4,7 @@ namespace Domain.Authenticate
 {
     public interface IAuthenticateService
     {
-        Task<UserRegistrationResponseModel> Register(UserRegistrationRequestModel requestModel);
+        Task<UserRegistrationResponseModel> Registration(UserRegistrationRequestModel requestModel);
         Task<UserLoginResponseModel> Login(UserLoginRequestModel requestModel);
         Task<UserLogoutResponseModel> Logout(UserLogoutRequestModel requestModel);
     }

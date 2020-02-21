@@ -21,6 +21,15 @@ namespace Infrastructure.Contexts
             modelBuilder.Entity<UserModel>()
                 .Property(b => b.CreatedDate)
                 .HasDefaultValueSql("NOW()");
+            modelBuilder.Entity<UserModel>()
+                .Property(b => b.IsActive)
+                .HasDefaultValueSql("true");
+            modelBuilder.Entity<UserModel>()
+                .Property(b => b.NamePatronymic)
+                .HasDefaultValueSql("null");
+            modelBuilder.Entity<UserModel>()
+                .Property(b => b.Phone)
+                .HasDefaultValueSql("null");
         }
     }
 }

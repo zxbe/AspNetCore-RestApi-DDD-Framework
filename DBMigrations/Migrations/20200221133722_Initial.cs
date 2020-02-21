@@ -12,13 +12,13 @@ namespace DBMigrations.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    IsActive = table.Column<bool>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: true, defaultValueSql: "true"),
                     CreatedDate = table.Column<DateTime>(nullable: false, defaultValueSql: "NOW()"),
                     CreatorId = table.Column<Guid>(nullable: true),
                     NameFirst = table.Column<string>(maxLength: 20, nullable: false),
                     NameSecond = table.Column<string>(maxLength: 20, nullable: false),
-                    NamePatronymic = table.Column<string>(maxLength: 20, nullable: true),
-                    Phone = table.Column<string>(maxLength: 20, nullable: false),
+                    NamePatronymic = table.Column<string>(maxLength: 20, nullable: true, defaultValueSql: "null"),
+                    Phone = table.Column<string>(maxLength: 20, nullable: false, defaultValueSql: "null"),
                     Email = table.Column<string>(maxLength: 20, nullable: false),
                     Password = table.Column<string>(maxLength: 50, nullable: false)
                 },

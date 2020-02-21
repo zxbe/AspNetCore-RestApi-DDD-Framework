@@ -10,7 +10,7 @@ namespace Infrastructure.Repositories.User
 {
     public class UserRepository : BaseRepository<UserModel>, IUserRepository
     {
-        public UserRepository(Context context, ILogger logger) : base(context, logger)
+        public UserRepository(Context context) : base(context)
         {
         }
 
@@ -36,7 +36,7 @@ namespace Infrastructure.Repositories.User
         {
             Context.Users.Add(data);
             await Context.SaveChangesAsync();
-            return data;
+            return await Context.Users.LastAsync();
         }
 
         public async Task<UserModel> Edit(UserModel data)
