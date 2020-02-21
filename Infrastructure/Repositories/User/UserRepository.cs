@@ -36,7 +36,7 @@ namespace Infrastructure.Repositories.User
         {
             Context.Users.Add(data);
             await Context.SaveChangesAsync();
-            return await Context.Users.LastAsync();
+            return data;
         }
 
         public async Task<UserModel> Edit(UserModel data)
