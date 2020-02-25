@@ -1,9 +1,6 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Domain.Authenticate;
 using Domain.Error;
-using Domain.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -47,6 +44,8 @@ namespace Api.Controllers
         {
             return Ok("Кукусики");
         }
-
+      
+        private BadRequestObjectResult BadRequest(ErrorCodes code, string property = "")
+            => BadRequest(new ErrorContainer(code, property));
     }
 }

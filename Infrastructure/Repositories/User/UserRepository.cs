@@ -34,15 +34,13 @@ namespace Infrastructure.Repositories.User
 
         public async Task<UserModel> Create(UserModel data)
         {
-            Context.Users.Add(data);
-            await Context.SaveChangesAsync();
+            await Context.Users.AddAsync(data);
             return data;
         }
 
-        public async Task<UserModel> Edit(UserModel data)
+        public UserModel Edit(UserModel data)
         {
             Context.Users.Update(data);
-            await Context.SaveChangesAsync();
             return data;
         }
     }

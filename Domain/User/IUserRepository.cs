@@ -9,6 +9,6 @@ namespace Domain.User
         Task<UserModel> GetByEmail(string email);
         Task<UserModel> GetById(Guid guid);
         Task<UserModel> Create(UserModel data);
-        Task<UserModel> Edit(UserModel data);
+        UserModel Edit(UserModel data);
     }
 }
