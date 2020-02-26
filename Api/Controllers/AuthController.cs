@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Domain.Authenticate;
 using Domain.Error;
 using Microsoft.AspNetCore.Authorization;
@@ -45,7 +46,7 @@ namespace Api.Controllers
             return Ok("Кукусики");
         }
       
-        private BadRequestObjectResult BadRequest(ErrorCodes code, string property = "")
+        private BadRequestObjectResult BadRequest(ErrorCodes code, List<string> property)
             => BadRequest(new ErrorContainer(code, property));
     }
 }

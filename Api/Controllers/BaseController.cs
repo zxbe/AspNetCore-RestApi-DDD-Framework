@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Domain.Base;
@@ -18,7 +19,7 @@ namespace Api.Controllers
         public abstract Task<ActionResult<T>> Put([FromBody]T model);
         [HttpDelete("{id}")]
         public abstract Task<ActionResult<T>> Delete(Guid id);
-        private BadRequestObjectResult BadRequest(ErrorCodes code, string property = "")
+        private BadRequestObjectResult BadRequest(ErrorCodes code, List<string> property)
             => BadRequest(new ErrorContainer(code, property));
     }
 }
