@@ -5,6 +5,7 @@ using Api.Scheduler;
 using Domain.Authenticate;
 using Domain.User;
 using Infrastructure.Contexts;
+using Infrastructure.Email;
 using Infrastructure.Repositories.User;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -48,6 +49,13 @@ namespace Api
 
             #region DI Repository
             // services.AddTransient<IUserRepository,UserRepository>();
+            #endregion
+
+            #region DI Infrastructure
+            var emailConfig = Configuration
+                .GetSection("EmailConfiguration")
+                .Get<EmailConfiguration>();
+            services.AddSingleton(emailConfig);
             #endregion
             
             services.AddCors();
