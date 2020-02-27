@@ -56,6 +56,7 @@ namespace Api
                 .GetSection("EmailConfiguration")
                 .Get<EmailConfiguration>();
             services.AddSingleton(emailConfig);
+            services.AddSingleton(typeof(EmailSender));
             #endregion
             
             services.AddCors();
@@ -118,7 +119,7 @@ namespace Api
                 endpoints.MapControllers();
             });
             
-            UpdateDatabase(app);
+            // UpdateDatabase(app);
             
             var logger = loggerFactory.CreateLogger("LoggerInStartup");
             logger.LogInformation($"\n\n{DateTime.Now} | Startup logger was launched");

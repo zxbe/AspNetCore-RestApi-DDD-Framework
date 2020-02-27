@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Security.Authentication;
 using System.Threading.Tasks;
 using MailKit.Net.Smtp;
 using MimeKit;
@@ -17,6 +19,8 @@ namespace Infrastructure.Email
         public async Task SendAsync(string toAddress, string subject, string body, string attachmentPath = null)
         {
             using var client = new SmtpClient();
+            Enum.TryParse(_configuration.SslProtocol, out SslProtocols sslProtocols);
+            client.SslProtocols = sslProtocols;
             await client.ConnectAsync(_configuration.Host, _configuration.Port, _configuration.EnableSsl);
             await client.AuthenticateAsync(_configuration.UserName, _configuration.Password);
             await client.SendAsync(MimeMessage(toAddress, subject, body, attachmentPath));
@@ -26,6 +30,8 @@ namespace Infrastructure.Email
         public void Send(string toAddress, string subject, string body, string attachmentPath = null)
         {
             using var client = new SmtpClient();
+            Enum.TryParse(_configuration.SslProtocol, out SslProtocols sslProtocols);
+            client.SslProtocols = sslProtocols;
             client.Connect(_configuration.Host, _configuration.Port, _configuration.EnableSsl);
             client.Authenticate(_configuration.UserName, _configuration.Password);
             client.Send(MimeMessage(toAddress, subject, body, attachmentPath));
