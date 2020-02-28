@@ -1,11 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Runtime.CompilerServices;
-using System.Text.Json.Serialization;
-using Domain.Base;
+﻿﻿using System.ComponentModel.DataAnnotations;
+using Domain.User;
 
-namespace Domain.User
+namespace Domain.Authenticate
 {
-    public class UserModel : BaseModel
+    public class UserRegistrationRequestDto
     {
         /// <summary>
         /// User first name
@@ -27,7 +25,6 @@ namespace Domain.User
         /// <summary>
         /// User phone
         /// </summary>
-        [Required]
         [MaxLength(20)]
         public string Phone { get; set; }
         /// <summary>
@@ -41,7 +38,10 @@ namespace Domain.User
         /// </summary>
         [Required]
         [MaxLength(50)]
-        [JsonIgnore]
         public string Password { get; set; }
+        /// <summary>
+        /// User client
+        /// </summary>
+        public string UserAgent { get; set; }
     }
 }

@@ -3,9 +3,12 @@ using System.IO;
 using System.Text;
 using Api.Scheduler;
 using Domain.Authenticate;
+using Domain.Token;
 using Domain.User;
 using Infrastructure.Contexts;
+using Infrastructure.Crypto;
 using Infrastructure.Email;
+using Infrastructure.Repositories.Token;
 using Infrastructure.Repositories.User;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -23,8 +26,10 @@ namespace Api
     public class Startup
     {
         private static readonly string Env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-        private static readonly string AppSettings = string.IsNullOrEmpty(Env) ? "appsettings.json" : $"appsettings.{Env}.json";
-        
+
+        private static readonly string AppSettings =
+            string.IsNullOrEmpty(Env) ? "appsettings.json" : $"appsettings.{Env}.json";
+
         public IConfiguration Configuration { get; }
 
         public Startup(IConfiguration configuration)
@@ -36,21 +41,26 @@ namespace Api
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+
             #region DI Service
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile(AppSettings, optional: true, reloadOnChange: false);
             services.AddSingleton(builder.Build());
-            // services.AddTransient<IAuthenticateService, AuthenticateService>();
-            // services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IAuthenticateService, AuthenticateService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<ITokenService, TokenService>();
+
+            services.AddSingleton<CryptoHelper>();
             services.AddSingleton<IHostedService, ScheduleTask>();
             #endregion
 
             #region DI Repository
-            // services.AddTransient<IUserRepository,UserRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<ITokenRepository, TokenRepository>();
             #endregion
-
+            
             #region DI Infrastructure
             var emailConfig = Configuration
                 .GetSection("EmailConfiguration")
@@ -84,7 +94,8 @@ namespace Api
                 });
 
             services.AddControllers();
-            services.AddDbContext<Context>(options => {
+            services.AddDbContext<Context>(options =>
+            {
                 options.UseNpgsql(
                     Configuration.GetConnectionString("DefaultConnection"),
                     x => x.MigrationsAssembly("DBMigrations")
@@ -95,11 +106,11 @@ namespace Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            
+            // if (env.IsDevelopment())
+            // {
+            app.UseDeveloperExceptionPage();
+            // }
+
             // global cors policy
             app.UseCors(x => x
                 .AllowAnyOrigin()
@@ -111,28 +122,24 @@ namespace Api
             app.UseMvc();
 
             app.UseRouting();
-            
+
             app.UseHttpsRedirection();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-            
-            // UpdateDatabase(app);
-            
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+
+            UpdateDatabase(app);
+
             var logger = loggerFactory.CreateLogger("LoggerInStartup");
             logger.LogInformation($"\n\n{DateTime.Now} | Startup logger was launched");
-
         }
-        
+
         private static void UpdateDatabase(IApplicationBuilder app)
         {
             using var serviceScope = app.ApplicationServices
                 .GetRequiredService<IServiceScopeFactory>()
                 .CreateScope();
             using var context = serviceScope.ServiceProvider.GetService<Context>();
-            
+
             context.Database.Migrate();
         }
     }

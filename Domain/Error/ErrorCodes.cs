@@ -9,11 +9,13 @@
         WrongType = 6,
 
         InvalidPhoneNumber = 7,
-
+        
         YouAreBlocked = 8,
         UserIsBlocked = 9,
         
         UserEmailExists = 10,
         UserPhoneExists = 11,
+        
+        IncorrectEmailOrPassword = 12,
     }
 }

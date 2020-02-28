@@ -1,11 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿﻿using System;
+using System.Threading.Tasks;
 
 namespace Domain.Authenticate
 {
     public interface IAuthenticateService
     {
-        Task<UserRegistrationResponseModel> Registration(UserRegistrationRequestModel requestModel);
-        Task<UserLoginResponseModel> Login(UserLoginRequestModel requestModel);
-        Task<UserLogoutResponseModel> Logout(UserLogoutRequestModel requestModel);
+        Task<UserRegistrationResponseDto> Registration(UserRegistrationRequestDto requestDto);
+        Task<UserLoginResponseDto> Login(UserLoginRequestDto requestDto);
+        Task<UserLogoutResponseDto> Logout(Guid sessionId);
     }
 }

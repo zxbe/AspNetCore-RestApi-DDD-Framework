@@ -3,7 +3,7 @@ using Domain.Error;
 
 namespace Domain.Base
 {
-    public class BaseResponseModel
+    public class BaseResponseDto
     {
         public ErrorCodes? Error { get; set; }
         public List<string> ErrorField { get; set; }

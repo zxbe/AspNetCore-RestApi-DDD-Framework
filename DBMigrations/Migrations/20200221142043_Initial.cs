@@ -18,7 +18,7 @@ namespace DBMigrations.Migrations
                     NameFirst = table.Column<string>(maxLength: 20, nullable: false),
                     NameSecond = table.Column<string>(maxLength: 20, nullable: false),
                     NamePatronymic = table.Column<string>(maxLength: 20, nullable: true, defaultValueSql: "null"),
-                    Phone = table.Column<string>(maxLength: 20, nullable: false, defaultValueSql: "null"),
+                    Phone = table.Column<string>(maxLength: 20, nullable: true, defaultValueSql: "null"),
                     Email = table.Column<string>(maxLength: 20, nullable: false),
                     Password = table.Column<string>(maxLength: 50, nullable: false)
                 },

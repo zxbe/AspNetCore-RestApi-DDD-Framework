@@ -1,4 +1,5 @@
-﻿using Domain.User;
+﻿using Domain.Token;
+using Domain.User;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Contexts
@@ -10,6 +11,7 @@ namespace Infrastructure.Contexts
         }
         
         public DbSet<UserModel> Users { get; set; }
+        public DbSet<TokenModel> Token { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserModel>()
@@ -29,6 +31,15 @@ namespace Infrastructure.Contexts
                 .HasDefaultValueSql("null");
             modelBuilder.Entity<UserModel>()
                 .Property(b => b.Phone)
+                .HasDefaultValueSql("null");
+
+            modelBuilder.Entity<TokenModel>()
+                .HasIndex(b => b.UserId);
+            modelBuilder.Entity<TokenModel>()
+                .Property(b => b.CreatedDate)
+                .HasDefaultValueSql("NOW()");
+            modelBuilder.Entity<TokenModel>()
+                .Property(b => b.UserAgent)
                 .HasDefaultValueSql("null");
         }
     }

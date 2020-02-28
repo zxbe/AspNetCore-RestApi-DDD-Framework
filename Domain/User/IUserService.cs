@@ -6,5 +6,6 @@ namespace Domain.User
 {
     public interface IUserService
     {
+        Task<UserModel> GetById(Guid guid);
     }
 }
