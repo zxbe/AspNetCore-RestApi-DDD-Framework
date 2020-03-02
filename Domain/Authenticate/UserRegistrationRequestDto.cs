@@ -1,4 +1,4 @@
-﻿﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using Domain.User;
 
 namespace Domain.Authenticate
@@ -10,12 +10,14 @@ namespace Domain.Authenticate
         /// </summary>
         [Required]
         [MaxLength(20)]
+        [MinLength(1)]
         public string NameFirst { get; set; }
         /// <summary>
         /// User second name
         /// </summary>
         [Required]
         [MaxLength(20)]
+        [MinLength(1)]
         public string NameSecond { get; set; }
         /// <summary>
         /// User patronymic name
@@ -26,17 +28,22 @@ namespace Domain.Authenticate
         /// User phone
         /// </summary>
         [MaxLength(20)]
+        [MinLength(10)]
+        [Phone]
         public string Phone { get; set; }
         /// <summary>
         /// User Email
         /// </summary>
         [Required]
+        [MinLength(6)]
         [MaxLength(20)]
+        [EmailAddress]
         public string Email { get; set; }
         /// <summary>
         /// User Password
         /// </summary>
         [Required]
+        [MinLength(6)]
         [MaxLength(50)]
         public string Password { get; set; }
         /// <summary>

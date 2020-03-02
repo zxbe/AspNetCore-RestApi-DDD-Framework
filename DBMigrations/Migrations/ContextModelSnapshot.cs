@@ -45,7 +45,8 @@ namespace DBMigrations.Migrations
                         .HasColumnType("text")
                         .HasDefaultValueSql("null");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
+                        .IsRequired()
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
