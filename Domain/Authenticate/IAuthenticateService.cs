@@ -8,5 +8,7 @@ namespace Domain.Authenticate
         Task<UserRegistrationResponseDto> Registration(UserRegistrationRequestDto requestDto);
         Task<UserLoginResponseDto> Login(UserLoginRequestDto requestDto);
         Task<UserLogoutResponseDto> Logout(Guid sessionId);
+        Task<UserPasswordForgotResponseDto> PasswordForgot(UserPasswordForgotRequestDto requestDto);
+
     }
 }

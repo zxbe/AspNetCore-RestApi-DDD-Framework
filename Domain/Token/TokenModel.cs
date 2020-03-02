@@ -1,6 +1,7 @@
-﻿﻿using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using Domain.Base;
+using Domain.User;
 
 namespace Domain.Token
 {
@@ -13,5 +14,7 @@ namespace Domain.Token
         
         [Required]
         public Guid? UserId { get; set; }
+        
+        public UserModel User { get; set; }
     }
 }

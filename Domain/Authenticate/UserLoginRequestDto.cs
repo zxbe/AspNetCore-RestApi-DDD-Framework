@@ -5,8 +5,6 @@ namespace Domain.Authenticate
     public class UserLoginRequestDto
     {
         [Required]
-        [MinLength(6)]
-        [MaxLength(20)]
         [EmailAddress]
         public string Email { get; set; }
 

@@ -1,4 +1,6 @@
-﻿using Domain.Token;
+﻿using Domain.Authenticate;
+using Domain.Code;
+using Domain.Token;
 using Domain.User;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +14,7 @@ namespace Infrastructure.Contexts
         
         public DbSet<UserModel> Users { get; set; }
         public DbSet<TokenModel> Token { get; set; }
+        public DbSet<CodeModel> Code { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserModel>()
@@ -41,6 +44,21 @@ namespace Infrastructure.Contexts
             modelBuilder.Entity<TokenModel>()
                 .Property(b => b.UserAgent)
                 .HasDefaultValueSql("null");
+            modelBuilder.Entity<TokenModel>()
+                .HasOne<UserModel>(g => g.User)
+                .WithMany(s => s.Tokens)
+                .HasForeignKey(s => s.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<CodeModel>()
+                .HasIndex(b => b.UserId);
+            modelBuilder.Entity<CodeModel>()
+                .HasIndex(b => b.Code);
+            modelBuilder.Entity<CodeModel>()
+                .HasOne<UserModel>(g => g.User)
+                .WithMany(s => s.Codes)
+                .HasForeignKey(s => s.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

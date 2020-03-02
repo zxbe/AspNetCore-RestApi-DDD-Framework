@@ -17,5 +17,7 @@
         UserPhoneExists = 11,
         
         IncorrectEmailOrPassword = 12,
+        
+        UserEmailNotExists = 13,
     }
 }

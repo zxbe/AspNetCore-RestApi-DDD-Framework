@@ -35,8 +35,6 @@ namespace Domain.Authenticate
         /// User Email
         /// </summary>
         [Required]
-        [MinLength(6)]
-        [MaxLength(20)]
         [EmailAddress]
         public string Email { get; set; }
         /// <summary>

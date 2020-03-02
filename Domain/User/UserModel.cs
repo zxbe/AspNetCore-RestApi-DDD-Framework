@@ -1,8 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
 using Domain.Base;
+using Domain.Code;
+using Domain.Token;
 
 namespace Domain.User
 {
@@ -38,8 +41,6 @@ namespace Domain.User
         /// User Email
         /// </summary>
         [Required]
-        [MinLength(6)]
-        [MaxLength(20)]
         [EmailAddress]
         public string Email { get; set; }
         /// <summary>
@@ -50,6 +51,11 @@ namespace Domain.User
         [MaxLength(50)]
         [JsonIgnore]
         public string Password { get; set; }
+        
+        public string Avatar { get; set; }
+        
+        public ICollection<TokenModel> Tokens { get; set; }
+        public ICollection<CodeModel> Codes { get; set; }
     }
     
 }

@@ -7,7 +7,7 @@ using Domain.Error;
 
 namespace Api.Controllers
 {
-    public abstract class BaseController<T> : Controller where T : BaseModel
+    public abstract class BaseController<T> : ControllerBase where T : BaseModel
     {
         [HttpGet]
         public abstract Task<ActionResult<T>> Get();

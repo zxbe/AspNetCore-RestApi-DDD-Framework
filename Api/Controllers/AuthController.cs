@@ -15,7 +15,7 @@ namespace Api.Controllers
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    public class AuthController : Controller
+    public class AuthController : ControllerBase
     {
         private IAuthenticateService _authenticateService;
 
@@ -68,6 +68,20 @@ namespace Api.Controllers
             await _authenticateService.Logout(value);
             return Ok();
         }
+
+        [HttpPost("[action]")]
+        public async Task<ActionResult> PasswordForgot([FromBody] UserPasswordForgotRequestDto requestDto)
+        {
+            await _authenticateService.PasswordForgot(requestDto);
+            return Ok();
+        }
+        
+        // [HttpPost("[action]")]
+        // public async Task<ActionResult> PasswordChange([FromBody] UserPasswordChangeRequestDto)
+        // {
+        // var value = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
+        // return Ok();
+        // }
 
         private BadRequestObjectResult BadRequest(ErrorCodes code, List<string> property)
             => BadRequest(new ErrorContainer(code, property));

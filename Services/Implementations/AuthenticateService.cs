@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Domain.Authenticate;
+using Domain.Code;
 using Domain.Error;
 using Domain.Token;
 using Domain.User;
@@ -16,6 +17,8 @@ namespace Services.Implementations
         private readonly ITokenRepository _tokenRepository;
         private readonly CryptoHelper _cryptoHelper;
         private readonly ITokenService _tokenService;
+        private readonly ICodeRepository _codeRepository;
+        private readonly ICodeService _codeService;
         private readonly string _secretKey;
 
         public AuthenticateService(
@@ -23,13 +26,17 @@ namespace Services.Implementations
             IUserRepository userRepository,
             CryptoHelper cryptoHelper,
             ITokenService tokenService,
-            ITokenRepository tokenRepository
+            ITokenRepository tokenRepository, 
+            ICodeService codeService,
+            ICodeRepository codeRepository
         )
         {
             _userRepository = userRepository;
             _cryptoHelper = cryptoHelper;
             _tokenService = tokenService;
             _tokenRepository = tokenRepository;
+            _codeService = codeService;
+            _codeRepository = codeRepository;
             _secretKey = configuration["AppSettings:Secret"];
         }
 
@@ -131,6 +138,32 @@ namespace Services.Implementations
             _tokenRepository.Delete(sessionId);
             await _tokenRepository.SaveChangesAsync();
             return new UserLogoutResponseDto();
+        }
+        
+        public async Task<UserPasswordForgotResponseDto> PasswordForgot(UserPasswordForgotRequestDto requestDto)
+        {
+            var user = await _userRepository.GetByEmail(requestDto.Email);
+            if (user == null)
+            {
+                return new UserPasswordForgotResponseDto
+                {
+                    Error = ErrorCodes.UserEmailNotExists,
+                    ErrorField = new List<string> {"Email"}
+                };
+            }
+
+            var res = _codeRepository.Create(
+                new CodeModel
+                {
+                    UserId = user.Id,
+                    Code = _codeService.GenerateCode(6),
+                    ReasonId = CodeReason.PasswordForgot,
+                    DateExpiration = new DateTime().Add(new TimeSpan(0,0,30))
+                }
+            );
+            //TODO email send
+            await _codeRepository.SaveChangesAsync();
+            return new UserPasswordForgotResponseDto();
         }
     }
 }
