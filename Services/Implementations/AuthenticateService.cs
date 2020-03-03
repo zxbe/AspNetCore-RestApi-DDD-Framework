@@ -26,8 +26,8 @@ namespace Services.Implementations
             IUserRepository userRepository,
             CryptoHelper cryptoHelper,
             ITokenService tokenService,
-            ITokenRepository tokenRepository, 
-            ICodeRepository codeRepository, 
+            ITokenRepository tokenRepository,
+            ICodeRepository codeRepository,
             ICodeService codeService
         )
         {
@@ -48,7 +48,7 @@ namespace Services.Implementations
                 return new UserRegistrationResponseDto
                 {
                     Error = ErrorCodes.UserEmailExists,
-                    ErrorField = new List<string> {"Email"}
+                    ErrorField = new List<string> {nameof(requestDto.Email)}
                 };
             }
 
@@ -58,7 +58,7 @@ namespace Services.Implementations
                 return new UserRegistrationResponseDto
                 {
                     Error = ErrorCodes.UserPhoneExists,
-                    ErrorField = new List<string> {"Phone"}
+                    ErrorField = new List<string> {nameof(requestDto.Phone)}
                 };
             }
 
@@ -102,7 +102,7 @@ namespace Services.Implementations
                 return new UserLoginResponseDto
                 {
                     Error = ErrorCodes.IncorrectEmailOrPassword,
-                    ErrorField = new List<string> {"Email", "Password"}
+                    ErrorField = new List<string> {nameof(requestDto.Email), nameof(requestDto.Email)}
                 };
             }
 
@@ -111,7 +111,7 @@ namespace Services.Implementations
                 return new UserLoginResponseDto
                 {
                     Error = ErrorCodes.IncorrectEmailOrPassword,
-                    ErrorField = new List<string> {"Email", "Password"}
+                    ErrorField = new List<string> {nameof(requestDto.Email), nameof(requestDto.Email)}
                 };
             }
 
@@ -150,7 +150,7 @@ namespace Services.Implementations
                 return new UserPasswordForgotResponseDto
                 {
                     Error = ErrorCodes.UserEmailNotExists,
-                    ErrorField = new List<string> {"Email"}
+                    ErrorField = new List<string> {nameof(requestDto.Email)}
                 };
             }
 
@@ -160,7 +160,7 @@ namespace Services.Implementations
                     UserId = user.Id,
                     Code = _codeService.GenerateCode(6),
                     ReasonId = CodeReason.PasswordForgot,
-                    DateExpiration = new DateTime().Add(new TimeSpan(0,0,30))
+                    DateExpiration = new DateTime().Add(new TimeSpan(0, 0, 30))
                 }
             );
             //TODO email send

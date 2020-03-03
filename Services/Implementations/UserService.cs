@@ -18,7 +18,6 @@ namespace Services.Implementations
         public async Task<UserModel> GetById(Guid guid)
         {
             var res = await _userRepository.GetById(guid);
-            // res.Password = null;
             return res;
         }
     }

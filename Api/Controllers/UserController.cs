@@ -12,19 +12,9 @@ namespace Api.Controllers
     [Route("api/[controller]")]
     public class UserController : BaseController<UserModel>
     {
-        private IUserService _userService;
-
-        public UserController(IUserService userService)
-        {
-            _userService = userService;
-        }
 
         [HttpGet("[action]")]
-        public async Task<ActionResult<UserModel>> Self()
-        {
-            var value = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
-            return await _userService.GetById(value);
-        }
+        public ActionResult<UserModel> Self() => CurrentUser;
 
         [Authorize(Roles = "Administrator")]
         public override Task<ActionResult<UserModel>> Get()
@@ -53,6 +43,10 @@ namespace Api.Controllers
         public override Task<ActionResult<UserModel>> Delete(Guid id)
         {
             throw new NotImplementedException();
+        }
+
+        public UserController(IUserService userService) : base(userService)
+        {
         }
     }
 }
