@@ -7,9 +7,9 @@ namespace Infrastructure.Repositories
 {
     public abstract class BaseRepository<TModel> where TModel : BaseModel
     {
-        protected Context Context;
+        protected readonly Context Context;
 
-        public BaseRepository(Context context)
+        protected BaseRepository(Context context)
         {
             Context = context;
         }
