@@ -7,6 +7,7 @@ namespace Domain.Token
 {
     public class TokenModel: BaseModel
     {
+        public string AppVersion { get; set; }
         public string UserAgent { get; set; }
 
         [Required]

@@ -48,5 +48,9 @@ namespace Domain.Authenticate
         /// User client
         /// </summary>
         public string UserAgent { get; set; }
+        /// <summary>
+        /// User app version
+        /// </summary>
+        public string AppVersion { get; set; }
     }
 }

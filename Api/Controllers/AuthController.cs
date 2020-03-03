@@ -50,6 +50,7 @@ namespace Api.Controllers
         public async Task<ActionResult> Registration([FromBody] UserRegistrationRequestDto requestDto)
         {
             requestDto.UserAgent = Request.Headers["User-Agent"].ToString();
+            requestDto.AppVersion = Request.Headers["X-Application-Version"].ToString();
             var result = await _authenticateService.Registration(requestDto);
 
             if (result.Error != null)
@@ -68,7 +69,7 @@ namespace Api.Controllers
             await _authenticateService.Logout(value);
             return Ok();
         }
-
+        
         [HttpPost("[action]")]
         public async Task<ActionResult> PasswordForgot([FromBody] UserPasswordForgotRequestDto requestDto)
         {
@@ -79,10 +80,10 @@ namespace Api.Controllers
         // [HttpPost("[action]")]
         // public async Task<ActionResult> PasswordChange([FromBody] UserPasswordChangeRequestDto)
         // {
-        // var value = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
-        // return Ok();
+            // var value = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
+            // return Ok();
         // }
-
+        
         private BadRequestObjectResult BadRequest(ErrorCodes code, List<string> property)
             => BadRequest(new ErrorContainer(code, property));
         

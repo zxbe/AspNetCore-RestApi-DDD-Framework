@@ -27,16 +27,16 @@ namespace Services.Implementations
             CryptoHelper cryptoHelper,
             ITokenService tokenService,
             ITokenRepository tokenRepository, 
-            ICodeService codeService,
-            ICodeRepository codeRepository
+            ICodeRepository codeRepository, 
+            ICodeService codeService
         )
         {
             _userRepository = userRepository;
             _cryptoHelper = cryptoHelper;
             _tokenService = tokenService;
             _tokenRepository = tokenRepository;
-            _codeService = codeService;
             _codeRepository = codeRepository;
+            _codeService = codeService;
             _secretKey = configuration["AppSettings:Secret"];
         }
 
@@ -80,7 +80,8 @@ namespace Services.Implementations
                     Id = sessionId,
                     UserAgent = requestDto.UserAgent,
                     Token = token,
-                    UserId = res.Id
+                    UserId = res.Id,
+                    AppVersion = requestDto.AppVersion
                 }
             );
             await _userRepository.SaveChangesAsync();
@@ -122,7 +123,8 @@ namespace Services.Implementations
                     Id = sessionId,
                     UserAgent = requestDto.UserAgent,
                     Token = token,
-                    UserId = user.Id
+                    UserId = user.Id,
+                    AppVersion = requestDto.AppVersion
                 }
             );
             await _tokenRepository.SaveChangesAsync();
@@ -139,7 +141,7 @@ namespace Services.Implementations
             await _tokenRepository.SaveChangesAsync();
             return new UserLogoutResponseDto();
         }
-        
+
         public async Task<UserPasswordForgotResponseDto> PasswordForgot(UserPasswordForgotRequestDto requestDto)
         {
             var user = await _userRepository.GetByEmail(requestDto.Email);
