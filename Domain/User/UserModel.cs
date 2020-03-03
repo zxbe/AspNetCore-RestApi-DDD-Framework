@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.CompilerServices;
-using System.Text.Json.Serialization;
-using Domain.Base;
+﻿﻿using Domain.Base;
 using Domain.Code;
 using Domain.Token;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Domain.User
 {
@@ -56,6 +54,8 @@ namespace Domain.User
         
         public ICollection<TokenModel> Tokens { get; set; }
         public ICollection<CodeModel> Codes { get; set; }
+        
+        public UserRoles Roles { get; set; }
     }
     
 }
