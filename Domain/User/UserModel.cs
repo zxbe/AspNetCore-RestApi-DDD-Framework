@@ -4,8 +4,9 @@ using Domain.Token;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+ using Domain.Srbac;
 
-namespace Domain.User
+ namespace Domain.User
 {
     public class UserModel : BaseModel
     {
@@ -52,8 +53,7 @@ namespace Domain.User
         
         public string Avatar { get; set; }
      
-        public UserRoles Roles { get; set; }
-        
+        public SrbacRoles Roles { get; set; }
         
         [JsonIgnore]
         public ICollection<TokenModel> Tokens { get; set; }

@@ -1,5 +1,6 @@
 ﻿using Domain.Authenticate;
 using Domain.Code;
+using Domain.Srbac;
 using Domain.Token;
 using Domain.User;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,8 @@ namespace Infrastructure.Contexts
         public DbSet<UserModel> Users { get; set; }
         public DbSet<TokenModel> Token { get; set; }
         public DbSet<CodeModel> Code { get; set; }
+        
+        public DbSet<SrbacRolePermissionModel> SrbacRolePermission { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserModel>()
@@ -59,6 +62,10 @@ namespace Infrastructure.Contexts
                 .WithMany(s => s.Codes)
                 .HasForeignKey(s => s.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+            
+            modelBuilder.Entity<SrbacRolePermissionModel>()
+                .HasIndex(b => new {b.Role, b.Permission})
+                .IsUnique();
         }
     }
 }
