@@ -51,11 +51,14 @@ namespace Domain.User
         public string Password { get; set; }
         
         public string Avatar { get; set; }
-        
-        public ICollection<TokenModel> Tokens { get; set; }
-        public ICollection<CodeModel> Codes { get; set; }
-        
+     
         public UserRoles Roles { get; set; }
+        
+        
+        [JsonIgnore]
+        public ICollection<TokenModel> Tokens { get; set; }
+        [JsonIgnore]
+        public ICollection<CodeModel> Codes { get; set; }
     }
     
 }

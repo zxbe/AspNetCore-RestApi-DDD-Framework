@@ -82,9 +82,9 @@ namespace Services.Implementations
                     Token = token,
                     UserId = res.Id,
                     AppVersion = requestDto.AppVersion
-                }
+                },
+                res.Id.Value
             );
-            await _userRepository.SaveChangesAsync();
 
             return new UserRegistrationResponseDto
             {
@@ -125,9 +125,9 @@ namespace Services.Implementations
                     Token = token,
                     UserId = user.Id,
                     AppVersion = requestDto.AppVersion
-                }
+                },
+                user.Id.Value
             );
-            await _tokenRepository.SaveChangesAsync();
             return new UserLoginResponseDto
             {
                 Id = user.Id,
@@ -137,8 +137,7 @@ namespace Services.Implementations
 
         public async Task<UserLogoutResponseDto> Logout(Guid sessionId)
         {
-            _tokenRepository.Delete(sessionId);
-            await _tokenRepository.SaveChangesAsync();
+            await _tokenRepository.Delete(new TokenModel(){Id = sessionId});
             return new UserLogoutResponseDto();
         }
 
@@ -154,17 +153,17 @@ namespace Services.Implementations
                 };
             }
 
-            var res = _codeRepository.Create(
+            var res = await _codeRepository.Create(
                 new CodeModel
                 {
                     UserId = user.Id,
                     Code = _codeService.GenerateCode(6),
                     ReasonId = CodeReason.PasswordForgot,
                     DateExpiration = new DateTime().Add(new TimeSpan(0, 0, 30))
-                }
+                },
+                user.Id.Value
             );
             //TODO email send
-            await _codeRepository.SaveChangesAsync();
             return new UserPasswordForgotResponseDto();
         }
     }

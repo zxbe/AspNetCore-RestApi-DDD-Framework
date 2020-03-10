@@ -10,6 +10,5 @@ namespace Domain.User
         Task<UserModel> GetById(Guid guid);
         Task<UserModel> Create(UserModel data);
         UserModel Edit(UserModel data);
-        Task SaveChangesAsync();
     }
 }

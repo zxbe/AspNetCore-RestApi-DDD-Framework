@@ -21,19 +21,7 @@ namespace Infrastructure.Repositories.Code
             var res = Context.Code.FirstOrDefaultAsync(u => u.Id == userId);
             return await res;
         }
-
-        public async Task<CodeModel> Create(CodeModel data)
-        {
-            await Context.Code.AddAsync(data);
-            return data;
-        }
-
-        public CodeModel Edit(CodeModel data)
-        {
-            Context.Code.Update(data);
-            return data;
-        }
-
+        
         public CodeRepository(Context context) : base(context)
         {
         }

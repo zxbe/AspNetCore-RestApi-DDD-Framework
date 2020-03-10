@@ -7,9 +7,7 @@ namespace Domain.Code
     {
         Task<CodeModel> GetByCode(string code);
         Task<CodeModel> GetByUserId(Guid userId);
-        Task<CodeModel> Create(CodeModel model);
-        CodeModel Edit(CodeModel model);
-        Task SaveChangesAsync();
-
+        Task<CodeModel> Create(CodeModel model, Guid creatorId);
+        Task<CodeModel> Edit(CodeModel model);
     }
 }

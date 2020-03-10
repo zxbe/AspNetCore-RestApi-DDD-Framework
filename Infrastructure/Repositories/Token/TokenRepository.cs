@@ -12,16 +12,5 @@ namespace Infrastructure.Repositories.Token
         {
         }
         
-        public async Task<TokenModel> Create(TokenModel data)
-        {
-            await Context.Token.AddAsync(data);
-            return data;
-        }
-
-        public void Delete(Guid sessionId)
-        {
-            Context.Token.RemoveRange(Context.Token.Where( u => u.Id == sessionId));
-        }
-        
     }
 }

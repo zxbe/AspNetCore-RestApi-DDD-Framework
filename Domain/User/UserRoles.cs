@@ -5,6 +5,6 @@
     [Flags]
     public enum UserRoles
     {
-
+        SuperAdmin = 2
     }
 }

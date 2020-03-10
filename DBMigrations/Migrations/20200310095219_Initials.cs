@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DBMigrations.Migrations
@@ -15,6 +15,8 @@ namespace DBMigrations.Migrations
                     IsActive = table.Column<bool>(nullable: true, defaultValueSql: "true"),
                     CreatedDate = table.Column<DateTime>(nullable: false, defaultValueSql: "NOW()"),
                     CreatorId = table.Column<Guid>(nullable: true),
+                    IsDelete = table.Column<bool>(nullable: false),
+                    DateDelete = table.Column<DateTime>(nullable: true),
                     NameFirst = table.Column<string>(maxLength: 20, nullable: false),
                     NameSecond = table.Column<string>(maxLength: 20, nullable: false),
                     NamePatronymic = table.Column<string>(maxLength: 20, nullable: true, defaultValueSql: "null"),
@@ -37,6 +39,8 @@ namespace DBMigrations.Migrations
                     IsActive = table.Column<bool>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     CreatorId = table.Column<Guid>(nullable: true),
+                    IsDelete = table.Column<bool>(nullable: false),
+                    DateDelete = table.Column<DateTime>(nullable: true),
                     UserId = table.Column<Guid>(nullable: false),
                     DateExpiration = table.Column<DateTime>(nullable: false),
                     Code = table.Column<string>(nullable: false),
@@ -61,6 +65,8 @@ namespace DBMigrations.Migrations
                     IsActive = table.Column<bool>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false, defaultValueSql: "NOW()"),
                     CreatorId = table.Column<Guid>(nullable: true),
+                    IsDelete = table.Column<bool>(nullable: false),
+                    DateDelete = table.Column<DateTime>(nullable: true),
                     AppVersion = table.Column<string>(nullable: true),
                     UserAgent = table.Column<string>(nullable: true, defaultValueSql: "null"),
                     Token = table.Column<string>(nullable: false),

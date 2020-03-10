@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Servic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBMigrations", "DBMigrations\DBMigrations.csproj", "{C71F58F0-F1CD-4A2C-B53E-5200528273BD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resources", "Resources\Resources.csproj", "{E79B6884-A5BD-4A43-A0E2-5F7E0C0412FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{C71F58F0-F1CD-4A2C-B53E-5200528273BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C71F58F0-F1CD-4A2C-B53E-5200528273BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C71F58F0-F1CD-4A2C-B53E-5200528273BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E79B6884-A5BD-4A43-A0E2-5F7E0C0412FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E79B6884-A5BD-4A43-A0E2-5F7E0C0412FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E79B6884-A5BD-4A43-A0E2-5F7E0C0412FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E79B6884-A5BD-4A43-A0E2-5F7E0C0412FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
