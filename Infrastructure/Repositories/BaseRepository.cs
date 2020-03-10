@@ -23,7 +23,7 @@ namespace Infrastructure.Repositories
             return await data;
         }
 
-        public async Task<TModel> Create(TModel data, Guid creatorId)
+        public async Task<TModel> Create(TModel data, Guid? creatorId)
         {
             data.CreatorId = creatorId;
             await ContextEntity.AddAsync(data);

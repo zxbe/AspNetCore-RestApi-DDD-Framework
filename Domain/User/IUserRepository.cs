@@ -8,7 +8,7 @@ namespace Domain.User
         Task<UserModel> GetByPhone(string phone);
         Task<UserModel> GetByEmail(string email);
         Task<UserModel> GetById(Guid guid);
-        Task<UserModel> Create(UserModel data);
-        UserModel Edit(UserModel data);
+        Task<UserModel> Create(UserModel data, Guid? creatorId = null);
+        Task<UserModel> Edit(UserModel data);
     }
 }

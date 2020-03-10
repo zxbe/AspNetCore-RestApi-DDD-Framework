@@ -82,8 +82,7 @@ namespace Services.Implementations
                     Token = token,
                     UserId = res.Id,
                     AppVersion = requestDto.AppVersion
-                },
-                res.Id.Value
+                }
             );
 
             return new UserRegistrationResponseDto

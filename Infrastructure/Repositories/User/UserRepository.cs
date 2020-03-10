@@ -25,23 +25,5 @@ namespace Infrastructure.Repositories.User
             var user = Context.Users.FirstOrDefaultAsync(u => u.Email == email);
             return await user;
         }
-
-        public async Task<UserModel> GetById(Guid guid)
-        {
-            var user = Context.Users.FirstOrDefaultAsync(u => u.Id == guid);
-            return await user;
-        }
-
-        public async Task<UserModel> Create(UserModel data)
-        {
-            await Context.Users.AddAsync(data);
-            return data;
-        }
-
-        public UserModel Edit(UserModel data)
-        {
-            Context.Users.Update(data);
-            return data;
-        }
     }
 }
