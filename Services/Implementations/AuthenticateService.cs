@@ -66,9 +66,9 @@ namespace Services.Implementations
                 };
             }
 
-            using var scope = new TransactionScope();
             try
             {
+                using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
                 var res = await _userRepository.Create(new UserModel
                     {
                         NameFirst = requestDto.NameFirst,
