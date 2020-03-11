@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Repositories.User
 {
-    public class UserRepository : BaseRepository<UserModel>, IUserRepository
+    public class UserRepository : BaseRepository<UserModel>
     {
         public UserRepository(Context context) : base(context)
         {

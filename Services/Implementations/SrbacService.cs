@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Domain.Srbac;
+using Infrastructure.Repositories.Srbac;
 
 namespace Services.Implementations
 {
     public class SrbacService : ISrbacService
     {
-        private ISrbacRepository _srbacRepository;
+        private SrbacRepository _srbacRepository;
 
-        public SrbacService(ISrbacRepository srbacRepository)
+        public SrbacService(SrbacRepository srbacRepository)
         {
             _srbacRepository = srbacRepository;
         }

@@ -1,33 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Transactions;
 using Domain.Authenticate;
 using Domain.Code;
 using Domain.Error;
 using Domain.Token;
 using Domain.User;
 using Infrastructure.Crypto;
+using Infrastructure.Repositories.Code;
+using Infrastructure.Repositories.Token;
+using Infrastructure.Repositories.User;
 using Microsoft.Extensions.Configuration;
 
 namespace Services.Implementations
 {
     public class AuthenticateService : IAuthenticateService
     {
-        private readonly IUserRepository _userRepository;
-        private readonly ITokenRepository _tokenRepository;
+        private readonly UserRepository _userRepository;
+        private readonly TokenRepository _tokenRepository;
         private readonly CryptoHelper _cryptoHelper;
         private readonly ITokenService _tokenService;
-        private readonly ICodeRepository _codeRepository;
+        private readonly CodeRepository _codeRepository;
         private readonly ICodeService _codeService;
         private readonly string _secretKey;
 
         public AuthenticateService(
             IConfiguration configuration,
-            IUserRepository userRepository,
+            UserRepository userRepository,
             CryptoHelper cryptoHelper,
             ITokenService tokenService,
-            ITokenRepository tokenRepository,
-            ICodeRepository codeRepository,
+            TokenRepository tokenRepository,
+            CodeRepository codeRepository,
             ICodeService codeService
         )
         {
@@ -62,34 +66,47 @@ namespace Services.Implementations
                 };
             }
 
-            var res = await _userRepository.Create(new UserModel
-                {
-                    NameFirst = requestDto.NameFirst,
-                    NameSecond = requestDto.NameSecond,
-                    NamePatronymic = requestDto.NamePatronymic,
-                    Password = _cryptoHelper.GetHash(requestDto.Password),
-                    Phone = requestDto.Phone,
-                    Email = requestDto.Email.ToLower()
-                }
-            );
-            var sessionId = Guid.NewGuid();
-            var token = _tokenService.GenerateToken(res.Id, sessionId, _secretKey);
-
-            await _tokenRepository.Create(new TokenModel
-                {
-                    Id = sessionId,
-                    UserAgent = requestDto.UserAgent,
-                    Token = token,
-                    UserId = res.Id,
-                    AppVersion = requestDto.AppVersion
-                }
-            );
-
-            return new UserRegistrationResponseDto
+            using var scope = new TransactionScope();
+            try
             {
-                Id = res.Id,
-                AuthToken = token
-            };
+                var res = await _userRepository.Create(new UserModel
+                    {
+                        NameFirst = requestDto.NameFirst,
+                        NameSecond = requestDto.NameSecond,
+                        NamePatronymic = requestDto.NamePatronymic,
+                        Password = _cryptoHelper.GetHash(requestDto.Password),
+                        Phone = requestDto.Phone,
+                        Email = requestDto.Email.ToLower()
+                    }
+                );
+                var sessionId = Guid.NewGuid();
+                var token = _tokenService.GenerateToken(res.Id, sessionId, _secretKey);
+
+                await _tokenRepository.Create(new TokenModel
+                    {
+                        Id = sessionId,
+                        UserAgent = requestDto.UserAgent,
+                        Token = token,
+                        UserId = res.Id,
+                        AppVersion = requestDto.AppVersion
+                    }
+                );
+                scope.Complete();
+
+                return new UserRegistrationResponseDto
+                {
+                    Id = res.Id,
+                    AuthToken = token
+                };
+            }
+            catch (Exception e)
+            {
+                return new UserRegistrationResponseDto
+                {
+                    Error = ErrorCodes.ServerError
+                };
+                //TODO логирование
+            }
         }
 
 
@@ -136,7 +153,7 @@ namespace Services.Implementations
 
         public async Task<UserLogoutResponseDto> Logout(Guid sessionId)
         {
-            await _tokenRepository.Delete(new TokenModel(){Id = sessionId});
+            await _tokenRepository.Delete(new TokenModel() {Id = sessionId});
             return new UserLogoutResponseDto();
         }
 

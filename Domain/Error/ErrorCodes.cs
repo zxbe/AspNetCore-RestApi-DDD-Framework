@@ -19,5 +19,7 @@
         IncorrectEmailOrPassword = 12,
         
         UserEmailNotExists = 13,
+        
+        ServerError = 14,
     }
 }

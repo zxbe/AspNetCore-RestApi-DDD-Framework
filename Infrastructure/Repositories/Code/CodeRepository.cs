@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.Code
 {
-    public class CodeRepository : BaseRepository<CodeModel>, ICodeRepository
+    public class CodeRepository : BaseRepository<CodeModel>
     {
 
         public async Task<CodeModel> GetByCode(string code)

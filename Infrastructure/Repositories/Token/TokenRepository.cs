@@ -6,7 +6,7 @@ using Infrastructure.Contexts;
 
 namespace Infrastructure.Repositories.Token
 {
-    public class TokenRepository: BaseRepository<TokenModel>, ITokenRepository
+    public class TokenRepository: BaseRepository<TokenModel>
     {
         public TokenRepository(Context context) : base(context)
         {

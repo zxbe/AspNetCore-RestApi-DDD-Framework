@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.Srbac
 {
-    public class SrbacRepository : BaseRepository<SrbacRolePermissionModel>, ISrbacRepository
+    public class SrbacRepository : BaseRepository<SrbacRolePermissionModel>
     {
         public IEnumerable<SrbacRolePermissionModel> RolesPermissions { get; set; }
 

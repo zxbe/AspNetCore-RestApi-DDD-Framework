@@ -61,9 +61,9 @@ namespace Api
             #endregion
 
             #region DI Repository
-            services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<ICodeRepository, CodeRepository>();
-            services.AddTransient<ITokenRepository, TokenRepository>();
+            services.AddTransient<UserRepository>();
+            services.AddTransient<CodeRepository>();
+            services.AddTransient<TokenRepository>();
             #endregion
             
             #region DI Infrastructure
