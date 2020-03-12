@@ -153,7 +153,8 @@ namespace Services.Implementations
 
         public async Task<UserLogoutResponseDto> Logout(Guid sessionId)
         {
-            await _tokenRepository.Delete(new TokenModel() {Id = sessionId});
+            var token = await _tokenRepository.GetById(sessionId);
+            await _tokenRepository.Delete(token);
             return new UserLogoutResponseDto();
         }
 
