@@ -1,5 +1,6 @@
 ﻿﻿using System;
-using System.Security.Claims;
+ using System.Collections.Generic;
+ using System.Security.Claims;
 using System.Threading.Tasks;
 using Domain.User;
 using Microsoft.AspNetCore.Authorization;
@@ -17,7 +18,7 @@ namespace Api.Controllers
         public ActionResult<UserModel> Self() => CurrentUser;
 
         [Authorize(Roles = "Administrator")]
-        public override Task<ActionResult<UserModel>> Get()
+        public override Task<ActionResult<IEnumerable<UserModel>>> Get()
         {
             throw new NotImplementedException();
         }

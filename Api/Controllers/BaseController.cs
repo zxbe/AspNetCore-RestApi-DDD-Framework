@@ -18,7 +18,7 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public abstract Task<ActionResult<T>> Get();
+        public abstract Task<ActionResult<IEnumerable<T>>> Get();
         [HttpGet("{id}")]
         public abstract Task<ActionResult<T>> Get(Guid id);
         [HttpPost]
